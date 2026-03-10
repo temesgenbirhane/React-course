@@ -5,6 +5,8 @@ import './HomePage.css';
 export function HomePage() {   // export it so that you can use it in another file
     return (
         <>
+
+        <title>Ecommerce Project</title>
             <div className="header">
             <div className="left-section">
                 <a href="index.html" className="header-link">
