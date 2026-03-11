@@ -5,21 +5,26 @@ import './HomePage.css';
     
 export function HomePage() {   // export it so that you can use it in another file
     const [products, setProducts] = useState([]);
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:3000/api/products')
             .then((response) => {
                 setProducts(response.data);
             });
+        axios.get('http://localhost:3000/api/cart-items')
+            .then((response) => {
+                setCart(response.data);
+            });
+
     }, []);
 
     return (
         <>
-            <Header />
-
-
+          
         <title>Ecommerce Project</title>
-            
+           <Header cart={cart} /> 
+  
            <div className="home-page">
             <div className="products-grid">
                 {products.map((product) => {
