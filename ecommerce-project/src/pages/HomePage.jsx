@@ -1,15 +1,13 @@
+import axios from 'axios';
 import { Header } from '../components/Header';
 import { products } from '../../starting-code/data/products';
 import './HomePage.css';
 
 export function HomePage() {   // export it so that you can use it in another file
-fetch ('http://localhost:3000/api/products')
-    .then((response) => {
-        return response.json().
-        then((data) => {
-            console.log(data);
-        })
-    })
+    axios.get('http://localhost:3000/api/products')
+        .then((response) => {
+            console.log(response.data);
+        });
     return (
         <>
             <Header />
