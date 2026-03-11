@@ -1,6 +1,6 @@
 import { Routes, Route } from 'React-router';
 import { HomePage } from './pages/HomePage'; // import the HomePage component that you created in another file
-import { CheckoutPage } from './pages/CheckoutPage'; 
+import { CheckoutPage } from './pages/checkout/CheckoutPage'; 
 import { OrdersPage } from './pages/OrdersPage';
 import { Tracking } from './pages/Tracking';
 import './App.css'
