@@ -87,9 +87,9 @@ export function CheckoutPage({ cart }) {
                               <div className="delivery-option-date">
                                 {dayjs(deliveryOption.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
                               </div>
-                              <div className="delivery-option-price">
-                                {priceString}
-                              </div>
+                              <>
+                                div className="delivery-option-price"{priceString}
+                              </>
                             </div>
                           </div>
 

@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { HomePage } from './pages/HomePage'; // import the HomePage component that you created in another file
+import { HomePage } from './pages/home/HomePage'; // import the HomePage component that you created in another file
 import { CheckoutPage } from './pages/checkout/CheckoutPage'; 
 import { OrdersPage } from './pages/OrdersPage';
 import { Tracking } from './pages/Tracking';
@@ -29,3 +29,5 @@ function App() {
 }
 
 export default App
+
+
