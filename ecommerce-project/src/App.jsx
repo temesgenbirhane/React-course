@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { HomePage } from './pages/home/HomePage'; // import the HomePage component that you created in another file
 import { CheckoutPage } from './pages/checkout/CheckoutPage'; 
-import { OrdersPage } from './pages/OrdersPage';
+import { OrdersPage } from './pages/orders/OrdersPage';
 import { Tracking } from './pages/Tracking';
 import './App.css'
 
