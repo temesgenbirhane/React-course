@@ -7,11 +7,13 @@ import './OrdersPage.css';
 export function OrdersPage({ cart }) {
   const [orders, setOrders] = useState([]);
 
+
   useEffect(() => {   // we are making an API request to the backend
-    axios.get('/api/orders?expand=products')   // remember we added localhost:5137 to the vite.config.js file so that we dont write it everytime
-      .then((response) => {
+    const fetchOrders = async () => {
+      const response =await axios.get('/api/orders?expand=products')   // remember we added localhost:5137 to the vite.config.js file so that we dont write it everytime
         setOrders(response.data);
-      });
+    }
+    fetchOrders();
   }, []);
 
   return (
