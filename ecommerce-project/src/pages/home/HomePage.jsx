@@ -4,7 +4,7 @@ import { Header } from '../../components/Header';
 import { ProductsGrid } from './ProductsGrid';
 import './HomePage.css';
     
-export function HomePage({ cart }) {   // export it so that you can use it in another file
+export function HomePage({ cart, loadCart }) {   // export it so that you can use it in another file
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export function HomePage({ cart }) {   // export it so that you can use it in an
   
            <div className="home-page">
 
-            <ProductsGrid products={products} />
+            <ProductsGrid products={products} loadCart={loadCart} />
             
             </div>
         </>
