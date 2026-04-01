@@ -9,17 +9,24 @@ export function CheckoutPage({ cart, loadCart }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState([null]);
 
-  useEffect(() => {
+  useEffect(() => {  // This useEffect only runs once, 
+  // because Delivery options does not need to change when the user updates the cart. They are static data for the whole checkout session.
+
+
     const fetchCheckoutData = async () => {
-      let response = await axios.get('/api/delivery-options?expand=estimatedDeliveryTime');
+      const response = await axios.get('/api/delivery-options?expand=estimatedDeliveryTime');
         setDeliveryOptions(response.data);
-      
-     response = await axios.get('/api/payment-summary')
-     setPaymentSummary(response.data);
       };
       fetchCheckoutData();
     }, []);
 
+    useEffect(() => {   // This useEffect will run every time the cart changes
+      const fetchpaymentSummary = async () => { 
+        const response = await axios.get('/api/payment-summary')
+        setPaymentSummary(response.data);
+
+      };
+      fetchpaymentSummary();}, [cart]);
     
   return (
     <>
