@@ -9,8 +9,13 @@ export function CartItemDetails({ cartItem, loadCart }) {
         await loadCart();
         };
 
-        const updateQuantity = () => { // toggles between showing the quantity as text and showing it as an input field
+        const updateQuantity = async () => { // toggles between showing the quantity as text and showing it as an input field
+            
             if (isUpdatingQuantity) {
+                await axios.put(`/api/cart-items/${cartItem.productId}`, {
+                quantity: Number(quantity),
+            });
+            await loadCart();
                 setIsUpdatingQuantity(false);
             } else {
                 setIsUpdatingQuantity(true);
