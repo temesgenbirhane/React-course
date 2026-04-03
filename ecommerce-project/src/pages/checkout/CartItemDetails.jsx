@@ -11,7 +11,7 @@ export function CartItemDetails({ cartItem, loadCart }) {
 
         const updateQuantity = async () => { // toggles between showing the quantity as text and showing it as an input field
             
-            if (isUpdatingQuantity) {
+            if (isUpdatingQuantity) {  
                 await axios.put(`/api/cart-items/${cartItem.productId}`, {
                 quantity: Number(quantity),
             });
@@ -26,6 +26,18 @@ export function CartItemDetails({ cartItem, loadCart }) {
             setQuantity(event.target.value);
             // event.target.value is the new quantity that the user has typed in the input field. We need to update the quantity state with this new value.
         }
+
+        const Demo = (event) => {
+            const keyPressed = event.key;
+            if (keyPressed === 'Enter') {
+                updateQuantity();
+            }
+            else if(keyPressed === 'Escape') {
+                setQuantity(cartItem.quantity);
+                setIsUpdatingQuantity(false);
+            };
+        }
+
     return (
         <>
             <img className="product-image"
@@ -41,7 +53,7 @@ export function CartItemDetails({ cartItem, loadCart }) {
                     <span>
                         Quantity: {
                             isUpdatingQuantity ? 
-                            <input type="text" className="quantity-textbook" value={quantity} onChange={updateInputQuantity} />:
+                            <input type="text" className="quantity-textbook" value={quantity} onChange={updateInputQuantity} onKeyDown={Demo} />:
                             <span className="quantity-label">{cartItem.quantity}</span>
                         }</span>
                     <span className="update-quantity-link link-primary" onClick={updateQuantity}>
