@@ -1,10 +1,19 @@
 import './header.css';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 export function Header({ cart }){
+    const [search, setSearch] = useState('');
     let totalQuantity = 0;
     cart.forEach((cartItem) => {
         totalQuantity += cartItem.quantity;
     });
+
+    const SearchProducts = () => {
+        console.log(search);
+    }
+    const updateSearchInput = (event) => {
+        setSearch(event.target.value);
+    }
     return(
             <div className="header">
             <div className="left-section">
@@ -17,7 +26,7 @@ export function Header({ cart }){
             </div>
 
             <div className="middle-section">
-                <input className="search-bar" type="text" placeholder="Search" />
+                <input className="search-bar" type="text" placeholder="Search" onClick={SearchProducts} value={search} onChange={updateSearchInput} />
 
                 <button className="search-button">
                 <img className="search-icon" src="images/icons/search-icon.png" />
