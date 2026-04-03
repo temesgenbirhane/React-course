@@ -1,11 +1,13 @@
 import './header.css';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 export function Header({ cart }){
 
     const navigate = useNavigate();
-
-    const [search, setSearch] = useState('');
+    const [searchParams] = useSearchParams();
+    const searchText = searchParams.get('search');
+    const [search, setSearch] = useState(searchText || '');  // || '' is a shortcut. It means if searchText does not exist
+                        // it will use a default value of ''.
     let totalQuantity = 0;
     cart.forEach((cartItem) => {
         totalQuantity += cartItem.quantity;
