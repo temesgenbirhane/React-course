@@ -1,7 +1,10 @@
 import './header.css';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 export function Header({ cart }){
+
+    const navigate = useNavigate();
+
     const [search, setSearch] = useState('');
     let totalQuantity = 0;
     cart.forEach((cartItem) => {
@@ -10,6 +13,7 @@ export function Header({ cart }){
 
     const SearchProducts = () => {
         console.log(search);
+        navigate(`/?search=${search}`);  // is also considered a query parameter, it does not load another page, it just updates the URL
     }
     const updateSearchInput = (event) => {
         setSearch(event.target.value);
