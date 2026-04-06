@@ -12,7 +12,7 @@ describe('product component', () => {
 
     let loadCart; // creates fake function that does not do anything(mock)
     
-    beforeEach(() => {   // beforeEach is called a test hook
+    beforeEach(() => {   // beforeEach is called a test hook, helps us avoid deplication
         product = {  // from starting code/product.js
             id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
             image: "images/products/athletic-cotton-socks-6-pairs.jpg",
