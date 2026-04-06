@@ -1,12 +1,19 @@
-import { it, expect, describe, vi } from "vitest";  // vi is for creating mock functions for props that make api to the backend, since we dont actually want to contact the backend
+import { it, expect, describe, vi, beforeEach } from "vitest";  // vi is for creating mock functions for props that make api to the backend, since we dont actually want to contact the backend
 import { render, screen } from '@testing-library/react'; // renders a component in a fake web page
 // screen helps us if the fake wepage has been renderd correctly
+import userEvent from '@testing-library/user-event'; // helps us to interact with the fake webpage like clicking buttons, selecting options, etc
 import { Product } from "./Product";
+import axios from 'axios';
 
+vi.mock('axios' ); // this is going to replace the real axios with a fake one that does not make real api calls
 
 describe('product component', () => {
-    it('displays the product details correctly', () => {
-        const product = {  // from starting code/product.js
+    let product;
+
+    let loadCart; // creates fake function that does not do anything(mock)
+    
+    beforeEach(() => {   // beforeEach is called a test hook
+        product = {  // from starting code/product.js
             id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
             image: "images/products/athletic-cotton-socks-6-pairs.jpg",
             name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
@@ -18,7 +25,10 @@ describe('product component', () => {
             keywords: ["socks", "sports", "apparel"]
         };
 
-        const loadCart = vi.fn(); // creates fake function that does not do anything(mock)
+        loadCart = vi.fn();
+    });
+        it('displays the product details correctly', () => {
+        
         // We need to include props that our original file has
         render(<Product product={product} loadCart={loadCart} />);
 
@@ -36,6 +46,23 @@ describe('product component', () => {
         // rating count test, i have no idea why 87 is not working
         expect(screen.getByText('8')).toBeInTheDocument();
     });
+
+    it('adds a product to the cart', async () => {
+    render(<Product product={product} loadCart={loadCart} />);
+
+    const user = userEvent.setup();
+    const addToCartButton = screen.getByTestId('add-to-cart-button');
+    await user.click(addToCartButton);
+
+    expect(axios.post).toHaveBeenCalledWith(
+      '/api/cart-items',
+      {
+        productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+        quantity: 1
+      }
+    );
+    expect(loadCart).toHaveBeenCalled();
+  });
 
 
 });
