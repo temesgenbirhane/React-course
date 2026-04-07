@@ -4,11 +4,14 @@ import { render, screen, within } from '@testing-library/react'; // renders a co
 import axios from 'axios';
 import { MemoryRouter } from "react-router-dom";
 import { HomePage } from "./HomePage";
+import userEvent from '@testing-library/user-event'; // helps us to interact with the fake webpage like clicking buttons, selecting options, etc
+
 
 vi.mock('axios'); // We are going to mock the implementation, and not just a symbol. our HomePage.jsx makes
 // an api call and displays sth on the homepage, so we will mock that implemenation
 describe('HomePage component', () => {
     let loadCart;
+    let user;
     beforeEach(() => {
         loadCart = vi.fn();  // Remeber this is a mock function
 
@@ -61,6 +64,34 @@ describe('HomePage component', () => {
         within(productContainers[1]).getByText('Intermediate Size Basketball')
     ).toBeInTheDocument();
      });
+
+     user = userEvent.setup();  // we need to setup userEvent before the test, since we are going to use it in the test, and it is not related to the other tests, so we dont need to setup it in beforeEach
+it('adds a product to the cart', async () => {
+    render(
+      <MemoryRouter>
+        <HomePage cart={[]} loadCart={loadCart} />
+      </MemoryRouter>
+    );
+    const productContainers = await screen.findAllByTestId('product-container');  // grabbed all the products from homepage
+
+    const addToCartButton1 = within(productContainers[0])
+      .getByTestId('add-to-cart-button');    // grabbed the add to cart button of the first product
+
+    await user.click(addToCartButton1); // click on the add to cart button
+     const addToCartButton2 = within(productContainers[1])
+      .getByTestId('add-to-cart-button');
+    await user.click(addToCartButton2);
+
+    expect(axios.post).toHaveBeenNthCalledWith(1, '/api/cart-items', { 
+      productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+      quantity: 1
+    });
+    expect(axios.post).toHaveBeenNthCalledWith(2, '/api/cart-items', {
+      productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+      quantity: 1
+    });
+    expect(loadCart).toHaveBeenCalledTimes(2);
+  });
 
 });
 
