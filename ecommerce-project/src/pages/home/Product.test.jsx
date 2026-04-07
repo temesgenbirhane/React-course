@@ -37,7 +37,7 @@ describe('product component', () => {
         render(<Product product={product} loadCart={loadCart} />);
 
 
-        // searches if the specifix text exists in the fake wepage EX- product name
+        // searches if the specific text exists in the fake wepage EX- product name
         expect(screen.getByText('Black and Gray Athletic Cotton Socks - 6 Pairs')).toBeInTheDocument();
         expect(screen.getByText('$10.90')).toBeInTheDocument();
         // Now we can't use getByText since it is going to be an image
@@ -74,7 +74,7 @@ describe('product component', () => {
      const quantitySelector = screen.getByTestId('product-quantity-selector');
     expect(quantitySelector).toHaveValue('1');
 
-    await user.selectOptions(quantitySelector, '3');
+    await user.selectOptions(quantitySelector, '3'); // changing the value of quantity to 3
     expect(quantitySelector).toHaveValue('3');    
 
 

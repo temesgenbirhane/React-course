@@ -74,8 +74,16 @@ it('adds a product to the cart', async () => {
     );
     const productContainers = await screen.findAllByTestId('product-container');  // grabbed all the products from homepage
 
+    const quantitySelector1 = within(productContainers[0]).getByTestId('product-quantity-selector'); // grabbed the quantity selector of the first product
+    await user.selectOptions(quantitySelector1, '3'); // changing the value of quantity to 3
+
+    const quantitySelector2 = within(productContainers[1]).getByTestId('product-quantity-selector');
+    await user.selectOptions(quantitySelector2, '2');
+
+
     const addToCartButton1 = within(productContainers[0])
       .getByTestId('add-to-cart-button');    // grabbed the add to cart button of the first product
+
 
     await user.click(addToCartButton1); // click on the add to cart button
      const addToCartButton2 = within(productContainers[1])
@@ -83,12 +91,12 @@ it('adds a product to the cart', async () => {
     await user.click(addToCartButton2);
 
     expect(axios.post).toHaveBeenNthCalledWith(1, '/api/cart-items', { 
-      productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-      quantity: 1
+      productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', // checking if the correct id is sent to the backend when clicking
+      quantity: 3
     });
     expect(axios.post).toHaveBeenNthCalledWith(2, '/api/cart-items', {
       productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-      quantity: 1
+      quantity: 2
     });
     expect(loadCart).toHaveBeenCalledTimes(2);
   });
