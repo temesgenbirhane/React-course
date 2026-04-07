@@ -11,6 +11,8 @@ describe('product component', () => {
     let product;
 
     let loadCart; // creates fake function that does not do anything(mock)
+
+    let user;
     
     beforeEach(() => {   // beforeEach is called a test hook, helps us avoid deplication
         product = {  // from starting code/product.js
@@ -25,6 +27,8 @@ describe('product component', () => {
             keywords: ["socks", "sports", "apparel"]
         };
 
+    user = userEvent.setup();    
+        
         loadCart = vi.fn();
     });
         it('displays the product details correctly', () => {
@@ -50,7 +54,6 @@ describe('product component', () => {
     it('adds a product to the cart', async () => {
     render(<Product product={product} loadCart={loadCart} />);
 
-    const user = userEvent.setup();
     const addToCartButton = screen.getByTestId('add-to-cart-button');
     await user.click(addToCartButton);
 
@@ -71,7 +74,6 @@ describe('product component', () => {
      const quantitySelector = screen.getByTestId('product-quantity-selector');
     expect(quantitySelector).toHaveValue('1');
 
-    const user = userEvent.setup();
     await user.selectOptions(quantitySelector, '3');
     expect(quantitySelector).toHaveValue('3');    
 
