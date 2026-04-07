@@ -1,7 +1,6 @@
 import { it, expect, describe, vi, beforeEach } from "vitest";  // vi is for creating mock functions for props that make api to the backend, since we dont actually want to contact the backend
 import { render, screen, within } from '@testing-library/react'; // renders a component in a fake web page
 // screen helps us if the fake wepage has been renderd correctly
-import userEvent from '@testing-library/user-event'; // helps us to interact with the fake webpage like clicking buttons, selecting options, etc
 import axios from 'axios';
 import { MemoryRouter } from "react-router-dom";
 import { HomePage } from "./HomePage";
