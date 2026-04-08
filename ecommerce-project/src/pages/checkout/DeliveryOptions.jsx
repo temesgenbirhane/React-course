@@ -28,12 +28,12 @@ export function DeliveryOptions( { cartItem, deliveryOptions, loadCart } ) {
                         // This allows use to refresh the page with out refreshing it
                 }; 
                 return (
-                    <div key={deliveryOption.id} className="delivery-option" onClick={updateDeliveryOption}>
+                    <div key={deliveryOption.id} className="delivery-option" onClick={updateDeliveryOption} data-testid="delivery-option">
                         <input type="radio"
                             checked={deliveryOption.id === cartItem.deliveryOptionId}
                             onChange={() => {}} // we need to add this to get rid of the warning but we don't need to do anything when the radio button changes because we are already handling that with the onClick function on the div
                             className="delivery-option-input"
-                            name={`delivery-option-${cartItem.productId}`} />
+                            name={`delivery-option-${cartItem.productId}`} data-testid="delivery-option-input" />
                         <div>
                             <div className="delivery-option-date">
                                 {dayjs(deliveryOption.estimatedDeliveryTimeMs).format('dddd, MMMM D')}

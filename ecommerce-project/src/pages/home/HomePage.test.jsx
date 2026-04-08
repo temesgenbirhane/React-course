@@ -15,6 +15,8 @@ describe('HomePage component', () => { // Run this setup code before every test 
     beforeEach(() => {
         loadCart = vi.fn();  // Remeber this is a mock function
 
+
+      // This is mocking axios.get so your component can call the API without actually hitting the backend.
     axios.get.mockImplementation(async (urlPath) => {  // when ever we run axios.get, It will run this fake function
       if (urlPath === '/api/products') {
                 return {
