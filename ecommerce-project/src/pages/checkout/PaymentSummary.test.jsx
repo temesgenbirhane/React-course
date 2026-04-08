@@ -5,7 +5,6 @@ import { MemoryRouter, useLocation } from "react-router-dom";
 import axios from 'axios';
 import userEvent from '@testing-library/user-event'; 
 import { PaymentSummary } from "./PaymentSummary";
-import { use } from "react";
 
 vi.mock('axios');
  describe ('payment summary component', () => {
