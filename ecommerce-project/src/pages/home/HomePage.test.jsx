@@ -3,13 +3,13 @@ import { render, screen, within } from '@testing-library/react'; // renders a co
 // screen helps us if the fake wepage has been renderd correctly
 import axios from 'axios';
 import { MemoryRouter } from "react-router-dom";
-import { HomePage } from "./HomePage";
+import { HomePage } from "./HomePage"; // we are not going to import data, only You import the file to test its behavior, not to reuse its internal variables
 import userEvent from '@testing-library/user-event'; // helps us to interact with the fake webpage like clicking buttons, selecting options, etc
 
 
 vi.mock('axios'); // We are going to mock the implementation, and not just a symbol. our HomePage.jsx makes
 // an api call and displays sth on the homepage, so we will mock that implemenation
-describe('HomePage component', () => {
+describe('HomePage component', () => { // Run this setup code before every test so no test pollutes another.
     let loadCart;
     let user;
     beforeEach(() => {
@@ -18,7 +18,9 @@ describe('HomePage component', () => {
     axios.get.mockImplementation(async (urlPath) => {  // when ever we run axios.get, It will run this fake function
       if (urlPath === '/api/products') {
                 return {
-                    data: [{
+                    data: [{  //  A fresh paymentSummary object is created. Every test gets a brand‑new copy of this object.
+// You dont want to use same object from your .jsx file, because Good tests are independent, predictable, and repeatable. 
+// But importing the same object from .jsx might break your test when code changes
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
