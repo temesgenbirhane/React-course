@@ -29,7 +29,8 @@ vi.mock('axios');
     });
 it('displays the correct details', async() => {
     render(
-        <MemoryRouter>
+      // remember that even if child components use routing, we need the parent component to be wrapped using MemoryRouter
+        <MemoryRouter>  
             <PaymentSummary paymentSummary={paymentSummary} loadCart={loadCart} />
         </MemoryRouter>
 // When your app runs normally, every component is inside a Router wrapper because main.jsx wraps the app 
@@ -40,7 +41,7 @@ it('displays the correct details', async() => {
 
     );
 
-    expect(screen.getByText('Items(3):')).toBeInTheDocument();
+    expect(screen.getByText('Items(3):')).toBeInTheDocument(); // Notice this is not getByTestid, this is getByText, we can use getByText when we want to check if a specific text is in the document, but we can't use it when we want to check if a specific element is in the document, for that we need to use getByTestId
 
      // There are multiple ways to check the text inside an element.
     // 1. within() + getByText() + toBeInTheDocument()
@@ -76,6 +77,7 @@ it('place an order', async () => {
     }
     render(
         <MemoryRouter>
+          {/* remember that even if child components use routing, we need the parent component to be wrapped using MemoryRouter. Read PaymentSummary.test.jsx for more information */}
             <PaymentSummary paymentSummary={paymentSummary} loadCart={loadCart} />
             <Location />
         </MemoryRouter>   

@@ -21,6 +21,7 @@ describe('Header component', () => {
 
   it('displays the header correctly', () => {
     render(
+      // remember that even if child components use routing, we need the parent component to be wrapped using MemoryRouter. Read PaymentSummary.test.jsx for more information
       <MemoryRouter>
         <Header cart={cart} />
       </MemoryRouter>

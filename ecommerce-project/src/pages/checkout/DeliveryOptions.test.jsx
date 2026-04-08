@@ -51,7 +51,7 @@ describe('DeliveryOptions component', () => {
       />
     );
 
-    expect(screen.getByText('Choose a delivery option:')).toBeInTheDocument();
+    expect(screen.getByText('Choose a delivery option:')).toBeInTheDocument();  // Notice this is not getByTestid, this is getByText, we can use getByText when we want to check if a specific text is in the document, but we can't use it when we want to check if a specific element is in the document, for that we need to use getByTestId
 
     const deliveryOptionElems = screen.getAllByTestId('delivery-option');
     expect(deliveryOptionElems.length).toBe(3);

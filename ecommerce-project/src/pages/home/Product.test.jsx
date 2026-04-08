@@ -39,7 +39,7 @@ describe('product component', () => {
 
         // searches if the specific text exists in the fake wepage EX- product name
         expect(screen.getByText('Black and Gray Athletic Cotton Socks - 6 Pairs')).toBeInTheDocument();
-        expect(screen.getByText('$10.90')).toBeInTheDocument();
+        expect(screen.getByText('$10.90')).toBeInTheDocument();  // Notice this is not getByTestid, this is getByText, we can use getByText when we want to check if a specific text is in the document, but we can't use it when we want to check if a specific element is in the document, for that we need to use getByTestId
         // Now we can't use getByText since it is going to be an image
         expect(screen.getByTestId('product-image')).toHaveAttribute('src', 'images/products/athletic-cotton-socks-6-pairs.jpg');
 

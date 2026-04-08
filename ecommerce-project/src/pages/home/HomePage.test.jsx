@@ -53,16 +53,17 @@ describe('HomePage component', () => { // Run this setup code before every test 
      
     render(
     // Had to include this apparently since we are using Link in the HomePage.jsx, we need to wrapped them a router. But the Link in App.jsx are safe since they are already wrapped around in main.jsx
+          // remember that even if child components use routing, we need the parent component to be wrapped using MemoryRouter. Read PaymentSummary.test.jsx for more information
     <MemoryRouter>  
         <HomePage cart={[]} loadCart={loadCart}/>
     </MemoryRouter>
     );
-    const productContainers  = await screen.findAllByTestId('product-container');  // Find will wait until useEffect in out Homepage.jsx is done. For that reason we assigned it to a value
+    const productContainers  = await screen.findAllByTestId('product-container');  // grabb all elements with the specified test id
     expect(productContainers.length).toBe(2);
     
     expect (
         within(productContainers[0]).getByText('Black and Gray Athletic Cotton Socks - 6 Pairs')
-    ).toBeInTheDocument();
+    ).toBeInTheDocument();  // Notice this is not getByTestid, this is getByText, we can use getByText when we want to check if a specific text is in the document, but we can't use it when we want to check if a specific element is in the document, for that we need to use getByTestId
 
      expect (
         within(productContainers[1]).getByText('Intermediate Size Basketball')
@@ -76,7 +77,7 @@ it('adds a product to the cart', async () => {
         <HomePage cart={[]} loadCart={loadCart} />
       </MemoryRouter>
     );
-    const productContainers = await screen.findAllByTestId('product-container');  // grabbed all the products from homepage
+    const productContainers = await screen.findAllByTestId('product-container');  // grabbed all the products from homepage. meaning we grabbed all elements with the test id 'product-container'
 
     const quantitySelector1 = within(productContainers[0]).getByTestId('product-quantity-selector'); // grabbed the quantity selector of the first product
     await user.selectOptions(quantitySelector1, '3'); // changing the value of quantity to 3
