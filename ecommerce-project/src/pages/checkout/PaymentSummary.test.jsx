@@ -1,13 +1,17 @@
 import { it, expect, describe, vi, beforeEach } from "vitest";  // vi is for creating mock functions for props that make api to the backend, since we dont actually want to contact the backend
 import { render, screen, within } from '@testing-library/react'; // renders a component in a fake web page
 // screen helps us if the fake wepage has been renderd correctly
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useLocation } from "react-router-dom";
+import axios from 'axios';
+import userEvent from '@testing-library/user-event'; 
 import { PaymentSummary } from "./PaymentSummary";
+import { use } from "react";
 
-
+vi.mock('axios');
  describe ('payment summary component', () => {
     let paymentSummary;
     let loadCart;
+    let user;
 
     beforeEach(() => {
        paymentSummary = {
@@ -22,6 +26,7 @@ import { PaymentSummary } from "./PaymentSummary";
     };
 
     loadCart = vi.fn();
+    user = userEvent.setup();
     });
 it('displays the correct details', async() => {
     render(
@@ -64,4 +69,25 @@ it('displays the correct details', async() => {
       screen.getByTestId('payment-summary-total')
     ).toHaveTextContent('$52.51');
   });
+
+it('place an order', async () => {
+    function Location(){
+        const location = useLocation();
+        return <div data-testid="url-path">{location.pathname}</div>;
+    }
+    render(
+        <MemoryRouter>
+            <PaymentSummary paymentSummary={paymentSummary} loadCart={loadCart} />
+            <Location />
+        </MemoryRouter>   
+    );
+
+    const placeOrderButton = screen.getByTestId('place-order-button');
+    await user.click(placeOrderButton);
+
+    expect(axios.post).toHaveBeenCalledWith('/api/orders');
+    expect(loadCart).toHaveBeenCalled();
+    expect(screen.getByTestId('url-path')).toHaveTextContent('/orders');
+
+});
 });
